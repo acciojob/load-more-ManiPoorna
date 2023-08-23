@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import './../styles/App.css';
 
 const items = [
@@ -35,10 +35,38 @@ const items = [
   "Item 30"
 ];
 
+
+let count = 0;
 const App = () => {
+  
+  let moreItems = [];
+  let [loaded,setLoaded] = useState([]);
+  let [button,setButton] = useState(true)
+
+  const loadMore = () =>{
+    count += 10;
+    if(count == 30){
+      setButton(false);
+    }
+    for (let i = 0; i < count; i++) {
+      moreItems[i] =  items[i];    
+    }
+    setLoaded(moreItems);
+  }
+
   return (
     <div>
-        {/* Do not remove the main div */}
+      {/* Do not remove the main div */}
+    <ul>
+      {
+        loaded.map((value,index)=>(
+          <li key={index}>{value}</li>
+        ))
+      }
+    </ul>
+    {
+      button && <button onClick={loadMore}>Load More</button>
+    }
     </div>
   )
 }
